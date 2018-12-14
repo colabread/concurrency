@@ -1,0 +1,32 @@
+Unsafe类
+
+public final native boolean compareAndSwapInt(Object var1, long var2, int var4, int var5)
+参数解释：
+var1：封装类
+var2：封装类中的值
+var4，底层内存中的值
+var5：新值
+执行逻辑：
+判断var2==var4
+	是：修改新值为var5（封装类中的、底层内存中的），返回true
+	否：将var4赋值给封装类中的值，返回false
+执行解释：
+其实就是判断当前值是否和底层值相同，如果相同，代表没有被其他线程修改过，那么直接修改，并且返回true
+如果当前值和底层值不相同，那么将当前值修改为底层值，返回false
+
+public final int getAndAddInt(Object var1, long var2, int var4) {
+        int var5;
+        do {
+            var5 = this.getIntVolatile(var1, var2);
+        } while(!this.compareAndSwapInt(var1, var2, var5, var5 + var4));
+
+        return var5;
+}
+参数解释：
+var1：封装类
+var2：封装类中的值
+var4：增量
+执行逻辑：
+先获取底层值，判断当前值和底层值是否相等
+	相等：修改当前值，并返回
+	不等：修改当前值，循环知道当前值和底层值相等，返回
