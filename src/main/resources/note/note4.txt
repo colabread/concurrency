@@ -1,0 +1,39 @@
+可见性
+
+导致共享变量在线程之间不可见的原因
+1、线程交叉执行
+2、重排序结合线程交叉执行
+3、共享变量的值更新之后没有及时从工作内存更新到主存
+
+synchronized的可见性
+jvm对synchronized的两条规定
+1、线程解锁前，必须把共享变量的最新值刷新到主存
+2、线程加锁时，将清空工作内存中共享变量的值，并从主存中重新读取
+
+volatile的可见性
+通过插入内存屏障和禁止重排序优化来实现
+1、对volatile变量写操作后，会执行一条store屏障指令，将工作内存中该变量的值写入主存
+2、对volatile变量读操作前，会执行一条load屏障指令，从主存中读取该变量最新的值
+
+volatile使用场景
+1、作为状态标识量，即只有1个线程在修改volatile变量，其他线程都在读
+
+volatile boolean inited = false;
+
+//线程1
+context = loadContext;
+inited = true;
+
+//线程2
+while(!inited){
+    sleep();
+}
+doSomethingWithConfig(context);
+
+//线程3
+...
+
+上面这段代码中，volatile变量inited用于标识是否加载context的状态
+在线程1中，当context被加载，inited标识量变成true，便激活了其他所有线程去执行需要context的代码
+
+2、double check
