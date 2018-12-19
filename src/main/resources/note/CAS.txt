@@ -1,5 +1,3 @@
-Unsafe类
-
 public final native boolean compareAndSwapInt(Object var1, long var2, int var4, int var5)
 参数解释：
 var1：封装类
@@ -29,4 +27,9 @@ var4：增量
 执行逻辑：
 先获取底层值，判断当前值和底层值是否相等
 	相等：修改当前值，并返回
-	不等：修改当前值，循环知道当前值和底层值相等，返回
+	不等：修改当前值，循环交换当前值和底层值
+
+以上两个方法都存在于Unsafe类中
+getAndAddInt是jdk的方法
+compareAndSwapInt是native（本地方法，非jdk的方法）
+在getAndAddInt中表用了compareAndSwapInt本地方法
