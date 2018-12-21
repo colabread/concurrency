@@ -9,9 +9,9 @@ import java.util.concurrent.Executors;
 public class SyncExample1 {
 
     /**
-     * 修饰对象
-     * 作用域：同步块内
-     * 作用对象：只对当前对象（this）
+     * 修饰当前对象
+     * 作用对象：只对当前对象（this）有效，相同类的不同对象的调用互不影响
+     * 使用场景：单例
      */
     public void test1(){
         synchronized (this) {
@@ -23,8 +23,8 @@ public class SyncExample1 {
 
     /**
      * 修饰普通方法
-     * 作用域：方法内
-     * 作用对象：只对当前对象（this）
+     * 作用对象：只对当前对象（this）有效，相同类的不同对象的调用互不影响
+     * 使用场景：单例
      */
     public synchronized void test2(){
         for (int i = 0; i < 10; i++) {

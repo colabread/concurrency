@@ -1,0 +1,12 @@
+StringBuilder：线程不安全，执行效率更高，适用于线程封闭的局部变量
+StringBuffer：线程安全，执行效率低（所有方法都通过synchronized实现），适用于并发场景下的全局变量
+
+SimpleDateFormat：线程不安全，并发场景下容易发生异常（for input string ""），不推荐使用
+org.joda.time.format.DateTimeFormatter：线程安全，推荐使用，相比于上面一种不管有并发安全优势，还有很多其他优势
+
+ArrayList、HashSet、HashMap等Collections
+ArrayList、HashSet、HashMap比较：
+            接口        元素是否有序    元素是否重复  hashCode计算方法
+ArrayList   List<E>     有序	           可重复
+HashSet     Set<E>      无序	           不可重复	    元素.hashCode()
+HashMap     Map<E>      无序	           键不可重复	键.hashCode()

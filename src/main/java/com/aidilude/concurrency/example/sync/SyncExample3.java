@@ -10,8 +10,8 @@ public class SyncExample3 {
 
     /**
      * 修饰静态方法
-     * 作用域：方法内
      * 作用对象：该类的所有对象
+     * 使用场景：多例
      */
     public static synchronized void test1(){
         for (int i = 0; i < 10; i++) {
@@ -21,8 +21,8 @@ public class SyncExample3 {
 
     /**
      * 修饰类
-     * 作用域：同步块内
      * 作用对象：该类的所有对象
+     * 使用场景：多例
      */
     public static void test2(){
         synchronized (SyncExample3.class) {
